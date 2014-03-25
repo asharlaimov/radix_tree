@@ -1,3 +1,5 @@
+require 'zip'
+
 class RadixTree
 
   private
@@ -42,21 +44,57 @@ class RadixTree
       v = v.children[char]
     end
 
-    get_all_words(v, starts_with, result)
+    read_all_words(v, starts_with, result)
     result
   end
 
-  def get_all
+  def get_all_words
     result = []
-    get_all_words(root, '', result)
+    read_all_words(root, '', result)
     result
   end
 
   private
-  def get_all_words(vertex, s = '', result_list)
-    vertex.children.each { |k, v| get_all_words(v, s+k, result_list) }
+  def read_all_words(vertex, s = '', result_list)
+    vertex.children.each { |k, v| read_all_words(v, s+k, result_list) }
     if vertex.leaf
       result_list << s
+    end
+  end
+
+  public
+  def save_to_file(file_name)
+    words = get_all_words
+    File.open(file_name, 'w+') do |f|
+      f.truncate(0) #Delete all the content from file
+      words.each { |word| f.puts(word) }
+    end
+  end
+
+  def load_from_file(file_name)
+    words = []
+    File.open(file_name).each do |line|
+      words << line
+    end
+
+    words.each { |word| add(word.chomp) }
+  end
+
+  def save_to_zip(zip_file_name, file_name_in_zip = 'words.txt')
+    words = get_all_words
+    File.delete(zip_file_name) if File.exist?(zip_file_name)
+    Zip::File.open(zip_file_name, Zip::File::CREATE) do |zip_file|
+      zip_file.get_output_stream(file_name_in_zip) do |os|
+        words.each { |word| os.puts(word) }
+      end
+    end
+  end
+
+  def load_from_zip(file_name)
+    Zip::File.open(file_name) do |zip_file|
+      entry = zip_file.glob('*.txt').first
+      words = entry.get_input_stream.readlines
+      words.each { |word| add(word.chomp) }
     end
   end
 end

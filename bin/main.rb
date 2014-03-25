@@ -1,6 +1,5 @@
 require '../lib/radix_tree'
 
-puts 'Started'
 tree = RadixTree.new
 tree.add 'hello'
 tree.add 'world'
@@ -9,15 +8,17 @@ tree.add 'homework'
 tree.add 'homepage'
 tree.add 'hi'
 
-puts tree.contains('hello')
-puts tree.contains('worldwide')
-puts tree.contains('home')
-puts tree.contains('hill')
-puts '__'
-
-tree.find('hom').each { |world| puts world }
+#tree.find('hom').each { |world| puts world }
 
 puts '__'
-tree.get_all.each { |world| puts world }
+tree.get_all_words.each { |world| puts world }
 
-puts 'Ended'
+#tree.save_to_file('d:/words123.txt')
+tree.save_to_zip('d:/words123.zip')
+
+tree2 = RadixTree.new
+#tree2.load_from_file('d:/words123.txt')
+tree2.load_from_zip('d:/words123.zip')
+
+puts '__'
+tree2.get_all_words.each { |world| puts world }

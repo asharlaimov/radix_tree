@@ -2,13 +2,12 @@ require 'minitest/autorun'
 require 'minitest/spec'
 require 'minitest/mock'
 require 'minitest/unit'
-require '../lib/radix_tree'
 require 'simplecov'
-SimpleCov.start
+require_relative '../lib/radix_tree'
 
-class RadixTreeTest < Minitest::Test
+class RadixTreeTest < MiniTest::Unit::TestCase
 
-  def test_add
+def test_add
     tree = RadixTree.new
     tree.add 'hello'
     assert_equal true, tree.contains('hello')
