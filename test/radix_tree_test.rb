@@ -1,15 +1,12 @@
-require 'minitest/autorun'
-require 'minitest/spec'
-require 'minitest/mock'
 require 'minitest/unit'
-require 'simplecov'
-require_relative '../lib/radix_tree'
+require 'minitest/autorun'
+require_relative '../lib/radix_tree/radix_tree'
 
 class RadixTreeTest < MiniTest::Unit::TestCase
 
 def test_add
-    tree = RadixTree.new
-    tree.add 'hello'
+  tree = RadixTree::RadixTree.new
+  tree.add 'hello'
     assert_equal true, tree.contains('hello')
     assert_equal false, tree.contains('hell')
     assert_equal false, tree.contains('')
@@ -17,7 +14,7 @@ def test_add
   end
 
   def test_add_two_items
-    tree = RadixTree.new
+    tree = RadixTree::RadixTree.new
     tree.add 'homework'
     tree.add 'homepage'
     assert_equal true, tree.contains('homework')
@@ -30,7 +27,7 @@ def test_add
   end
 
   def test_find_min
-    tree = RadixTree.new
+    tree = RadixTree::RadixTree.new
     tree.add 'home'
     tree.add 'homepage'
     assert_equal [], tree.find('')

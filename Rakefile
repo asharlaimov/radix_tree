@@ -1,18 +1,34 @@
+require 'rake'
 require 'rake/testtask'
-require 'minitest/autorun'
 require 'simplecov'
 
 Rake::TestTask.new(:test) do |test|
-  SimpleCov.minimum_coverage 80
-  #SimpleCov.command_name 'test:units'
   SimpleCov.start do
-    add_filter '/test/'
+    add_filter 'test'
+    minimum_coverage 80
   end
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  #test.test_files = FileList['test/**/test_*.rb']
+  SimpleCov.at_exit do
+    SimpleCov.result.format!
+  end
+  #test.pattern = 'test/*_test.rb'
+  test.pattern = 'test/**/*_test.rb'
 end
 
-# Rakefile
-#task :default => [:test]
+require 'bundler/gem_tasks'
+require 'minitest/autorun'
+require 'minitest/unit'
+
+#Callsed from 'rake'
+task :default do
+  puts 'Default task'
+end
+
+#Callsed from 'rake test'
+#task :test do
+#  SimpleCov.minimum_coverage 80
+#  SimpleCov.start
+#  puts "Hello World test!"
+#end
+
+#Fire tests from 'rake'
+task :default => [:test]

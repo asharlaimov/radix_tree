@@ -1,35 +1,27 @@
-Gem::Specification.new do |s|
-  s.name = 'radix_tree'
-  s.version = '0.0.1'
-  s.default_executable = 'radix_tree'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'radix_tree/version'
 
-  s.required_rubygems_version = Gem::Requirement.new('>= 0') if s.respond_to? :required_rubygems_version=
-  s.authors = ['Aleksey Sharlaimov']
-  s.date = %q{2014-03-03}
-  s.description = %q{A Radix Tree gem}
-  s.email = %q{nick@quaran.to}
-  s.files = ["Rakefile", "bin/main.rb", "lib/radix_tree.rb", "test/test_radix_tree.rb"]
-  s.test_files = ["test/test_radix_tree.rb"]
-  s.homepage = %q{http://rubygems.org/gems/hola}
-  s.license = 'MIT'
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{RadixTree!}
+Gem::Specification.new do |spec|
+  spec.name = 'radix_tree'
+  spec.version = RadixTree::VERSION
+  spec.authors = ['asharlaimov']
+  spec.email = ['sgnllsa@gmail.com']
+  spec.summary = %q{Radix Tree Store.}
+  spec.description = %q{Radix Tree Store.}
+  spec.homepage = ''
+  spec.license = 'MIT'
 
-  s.bindir = 'bin'
+  spec.files = `git ls-files -z`.split('\x0')
+  spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ['lib']
 
-  s.add_runtime_dependency "minitest"
-  s.add_runtime_dependency "simplecov"
-
-  if s.respond_to? :specification_version
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
+  spec.add_development_dependency 'bundler', '~> 1.5'
+  spec.add_development_dependency 'rake'
 end
+
 
 #gem build radix_tree.gemspec
 #http://www.sitepoint.com/creating-your-first-gem/
