@@ -1,8 +1,9 @@
+require 'minitest'
 require 'minitest/unit'
 require 'minitest/autorun'
 require_relative '../lib/radix_tree/radix_tree'
 
-class RadixTreeTest < MiniTest::Unit::TestCase
+class RadixTreeTest < Minitest::Test
 
 def test_add
   tree = RadixTree::RadixTree.new
