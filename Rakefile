@@ -9,3 +9,8 @@ Rake::TestTask.new do |t|
 end
 
 task :default => [:test]
+
+task :console do
+  ruby "bin/server.rb"
+  #ruby "bin/client.rb"
+end
