@@ -13,12 +13,12 @@ tree.add 'hi'
 puts '__'
 tree.get_all_words.each { |world| puts world }
 
-#tree.save_to_file('d:/words123.txt')
-tree.save_to_zip('d:/words123.zip')
+tree.save_to_file('d:/words123.txt')
+#tree.save_to_zip('d:/words123.zip')
 
 tree2 = RadixTree::RadixTree.new
-#tree2.load_from_file('d:/words123.txt')
-tree2.load_from_zip('d:/words123.zip')
+tree2.load_from_file('d:/words123.txt')
+#tree2.load_from_zip('d:/words123.zip')
 
 puts '__'
 tree2.get_all_words.each { |world| puts world }
