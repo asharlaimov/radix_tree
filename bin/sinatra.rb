@@ -1,7 +1,12 @@
+require 'json'
 require 'sinatra'
+require_relative '../lib/radix_tree/radix_tree'
 
-class App < Sinatra::Base
+set :port, 8080
 
+configure do
+  RADIX_TREE = RadixTree::RadixTree.new
+  RADIX_TREE.load_from_file('db/dictionary.txt')
 end
 
 get '/' do
@@ -9,7 +14,23 @@ get '/' do
 end
 
 get '/add?:word' do
-  word = params[:word]
+  content_type :json
+  word = params.keys.first
 
-  word
+  RADIX_TREE.add(word)
+end
+
+get '/contains?:word' do
+  content_type :json
+  word = params.keys.first
+
+  {result: RADIX_TREE.contains(word)}.to_json
+end
+
+get '/find?:word' do
+  content_type :json
+  word = params.keys.first
+
+  words = RADIX_TREE.find(word)
+  {words: words}.to_json
 end
