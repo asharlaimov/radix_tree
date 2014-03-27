@@ -12,7 +12,7 @@ class RadixTreeServer
   public
   def initialize
     @radix_tree = RadixTree::RadixTree.new
-    @radix_tree.load_from_file('tmp/dictionary.txt')
+    @radix_tree.load_from_file('db/dictionary.txt')
   end
 
   def add(word)
