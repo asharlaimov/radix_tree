@@ -9,6 +9,9 @@ GEM
     docile (1.1.3)
     minitest (5.3.1)
     multi_json (1.9.2)
+    rack (1.5.2)
+    rack-protection (1.5.2)
+      rack
     rake (0.9.6)
     rubyzip (1.1.2)
     simplecov (0.8.2)
@@ -16,6 +19,11 @@ GEM
       multi_json
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
+    sinatra (1.4.4)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.4.1)
 
 PLATFORMS
   x64-mingw32
@@ -27,3 +35,4 @@ DEPENDENCIES
   rake
   rubyzip
   simplecov
+  sinatra

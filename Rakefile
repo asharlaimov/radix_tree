@@ -11,6 +11,7 @@ end
 task :default => [:test]
 
 task :console do
-  ruby "bin/server.rb db/dictionary.txt"
-  ruby "bin/client.rb db/dictionary.txt"
+  ruby "bin/sinatra.rb" #ruby -rubygems bin/server.rb
+  #ruby "bin/server.rb" #ruby -rubygems bin/server.rb
+  #ruby "bin/client.rb" #ruby -rubygems bin/client.rb
 end

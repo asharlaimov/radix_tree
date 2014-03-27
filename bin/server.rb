@@ -11,8 +11,7 @@ class RadixTreeServer
   public
   def initialize
     @radix_tree = RadixTree::RadixTree.new
-    path = ARGV.first
-    @radix_tree.load_from_file(path.nil? ? '../db/dictionary.txt' : path)
+    @radix_tree.load_from_file('db/dictionary.txt')
   end
 
   def add(word)
