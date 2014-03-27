@@ -10,7 +10,7 @@ configure do
 end
 
 get '/' do
-  'Hello world!'
+  'Please use add, find or contains command!'
 end
 
 get '/add?:word' do
