@@ -10,7 +10,7 @@ class RadixTreeServer
 
   public
   def initialize
-    @radix_tree = RadixTree::RadixTree.new
+    @radix_tree = RadixTree::RadixTreeStorage.new
     @radix_tree.load_from_file('db/dictionary.txt')
   end
 

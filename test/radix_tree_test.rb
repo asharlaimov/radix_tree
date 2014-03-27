@@ -4,7 +4,7 @@ require_relative '../lib/radix_tree/radix_tree'
 class RadixTreeTest < Minitest::Test
 
   def test_add
-    tree = RadixTree::RadixTree.new
+    tree = RadixTree::RadixTreeStorage.new
     tree.add 'hello'
 
     assert_equal true, tree.contains('hello')
@@ -14,7 +14,7 @@ class RadixTreeTest < Minitest::Test
   end
 
   def test_add_two_items
-    tree = RadixTree::RadixTree.new
+    tree = RadixTree::RadixTreeStorage.new
     tree.add 'homework'
     tree.add 'homepage'
 
@@ -28,7 +28,7 @@ class RadixTreeTest < Minitest::Test
   end
 
   def test_find_min
-    tree = RadixTree::RadixTree.new
+    tree = RadixTree::RadixTreeStorage.new
     tree.add 'home'
     tree.add 'homepage'
 
@@ -39,7 +39,7 @@ class RadixTreeTest < Minitest::Test
   end
 
   def test_get_all
-    tree = RadixTree::RadixTree.new
+    tree = RadixTree::RadixTreeStorage.new
     tree.add 'home'
     tree.add 'homepage'
     tree.add 'homework'
@@ -51,7 +51,7 @@ class RadixTreeTest < Minitest::Test
   end
 
   def test_load_from_file
-    tree = RadixTree::RadixTree.new
+    tree = RadixTree::RadixTreeStorage.new
 
     File.stub(:open, ['hello', 'h']) do
       tree.load_from_file('')
@@ -61,7 +61,7 @@ class RadixTreeTest < Minitest::Test
   end
 
   def test_save_to_file
-    tree = RadixTree::RadixTree.new
+    tree = RadixTree::RadixTreeStorage.new
     tree.add 'home'
 
     mock = Minitest::Mock.new

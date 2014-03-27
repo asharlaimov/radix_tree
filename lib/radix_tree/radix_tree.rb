@@ -3,7 +3,7 @@ require 'zip'
 
 module RadixTree
 
-  class RadixTree
+  class RadixTreeStorage
 
     private
     attr_accessor :root

@@ -5,7 +5,7 @@ require_relative '../lib/radix_tree/radix_tree'
 set :port, 8080
 
 configure do
-  RADIX_TREE = RadixTree::RadixTree.new
+  RADIX_TREE = RadixTree::RadixTreeStorage.new
   RADIX_TREE.load_from_file('db/dictionary.txt')
 end
 
