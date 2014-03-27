@@ -1,4 +1,5 @@
 require 'drb/drb'
+require_relative '../lib/radix_tree/radix_tree'
 
 # The URI for the server to connect to
 SERVER_URI = "druby://localhost:8787"
@@ -7,12 +8,11 @@ class RadixTreeServer
   private
   attr_accessor :radix_tree
 
-  require_relative '../lib/radix_tree/radix_tree'
-
   public
   def initialize
     @radix_tree = RadixTree::RadixTree.new
-    @radix_tree.load_from_file('db/dictionary.txt')
+    path = ARGV.first
+    @radix_tree.load_from_file(path.nil? ? '../db/dictionary.txt' : path)
   end
 
   def add(word)
