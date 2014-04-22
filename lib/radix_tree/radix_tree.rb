@@ -2,8 +2,8 @@ require_relative 'version'
 require 'zip'
 
 module RadixTree
-
   class RadixTreeStorage
+    MAX_DEPTH = 100
 
     private
     attr_accessor :root
@@ -25,44 +25,49 @@ module RadixTree
     end
 
     def contains(word)
-      v = root
-      word.each_char do |char|
-        unless v.children.has_key?(char)
-          return false
-        end
-        v = v.children[char]
-      end
-
-      v.leaf ? true : false
+      found, vertex = read word
+      found && vertex.leaf # v.leaf because of exact match
     end
 
     def find(starts_with)
-      return [] if starts_with.length < 3
       result = []
-      v = root
-      starts_with.each_char do |char|
-        unless v.children.has_key?(char)
-          return result
-        end
-        v = v.children[char]
+      return result if starts_with.length < 3
+
+      found, vertex = read starts_with
+
+      if found
+        read_all_words(vertex, result, starts_with)
       end
 
-      read_all_words(v, starts_with, result)
       result
     end
 
     def get_all_words
       result = []
-      read_all_words(root, '', result)
+      read_all_words(root, result)
       result
     end
 
     private
-    def read_all_words(vertex, s = '', result_list)
-      vertex.children.each { |k, v| read_all_words(v, s+k, result_list) }
+    def read_all_words(vertex, result_list, s = '', depth = 0)
+      return if depth > MAX_DEPTH
+      vertex.children.each { |k, v| read_all_words(v, result_list, s + k, depth + 1) }
       if vertex.leaf
         result_list << s
       end
+    end
+
+    # read word and return [find result, last vertex]
+    def read(word)
+      v = root
+      word.each_char do |char|
+        unless v.children.has_key?(char)
+          return [false, v]
+        end
+        v = v.children[char]
+      end
+
+      [true, v]
     end
 
     public

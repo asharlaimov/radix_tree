@@ -2,11 +2,22 @@ require 'json'
 require 'sinatra'
 require_relative '../lib/radix_tree/radix_tree'
 
+DICTIONARY_PATH = 'db/dictionary.txt'
+
 set :port, 8080
 
+def load_dictionary(radix_tree)
+  begin
+    radix_tree.load_from_file(DICTIONARY_PATH)
+  rescue
+    puts 'unable to load dictionary'
+  end
+end
+
 configure do
-  RADIX_TREE = RadixTree::RadixTreeStorage.new
-  RADIX_TREE.load_from_file('db/dictionary.txt')
+  radix_tree = RadixTree::RadixTreeStorage.new
+  load_dictionary(radix_tree)
+  set :radix_tree, radix_tree
 end
 
 get '/' do
@@ -17,20 +28,20 @@ get '/add?:word' do
   content_type :json
   word = params.keys.first
 
-  RADIX_TREE.add(word)
+  options.radix_tree.add(word)
 end
 
 get '/contains?:word' do
   content_type :json
   word = params.keys.first
 
-  {result: RADIX_TREE.contains(word)}.to_json
+  {result: options.radix_tree.contains(word)}.to_json
 end
 
 get '/find?:word' do
   content_type :json
   word = params.keys.first
 
-  words = RADIX_TREE.find(word)
+  words = options.radix_tree.find(word)
   {words: words}.to_json
 end

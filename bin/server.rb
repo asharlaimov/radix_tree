@@ -4,6 +4,8 @@ require_relative '../lib/radix_tree/radix_tree'
 # The URI for the server to connect to
 SERVER_URI = "druby://localhost:8787"
 
+DICTIONARY_PATH = 'db/dictionary.txt'
+
 class RadixTreeServer
   private
   attr_accessor :radix_tree
@@ -11,7 +13,14 @@ class RadixTreeServer
   public
   def initialize
     @radix_tree = RadixTree::RadixTreeStorage.new
-    @radix_tree.load_from_file('db/dictionary.txt')
+  end
+
+  def load_dictionary(path)
+    begin
+      @radix_tree.load_from_file(path)
+    rescue
+      puts 'unable to load dictionary'
+    end
   end
 
   def add(word)
@@ -29,6 +38,7 @@ end
 
 # The object that handles requests on the server
 FRONT_OBJECT = RadixTreeServer.new
+FRONT_OBJECT.load_dictionary DICTIONARY_PATH
 
 $SAFE = 1 # disable eval() and friends
 
